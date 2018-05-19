@@ -34,10 +34,9 @@ def affine_layer(hidden_dim, x):
     dim_features = x.get_shape()[-1]
     batch_size = x.get_shape()[0]
     
+    W = tf.get_variable('W', shape=(dim_features, hidden_dim), initializer=tf.contrib.layers.xavier_initializer())
     b = tf.get_variable('b', shape=(hidden_dim), initializer=tf.zeros_initializer())
-    W = tf.get_variable('W',
-        shape=(dim_features, hidden_dim),
-        initializer=tf.contrib.layers.xavier_initializer())
+    
     return tf.add(tf.matmul(x,W), b)
     
     # x_cols = x.get_shape()[-1]
