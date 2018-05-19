@@ -117,7 +117,7 @@ def MakeLogits(x_ph, hidden_dims):
     Hint: Just return the logits.  Don't pass it through the final sigmoid (that's done in train_nn()).
     '''
     # YOUR CODE HERE
-    return None
+    return tf.squeeze(affine_layer(1,fully_connected_layers(hidden_dims, x_ph)), axis=-1)
     # END YOUR CODE HERE
 
 
