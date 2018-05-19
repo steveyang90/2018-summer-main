@@ -31,15 +31,15 @@ def affine_layer(hidden_dim, x):
           It needs to be a trainable variable!
     '''
     
-    dim_features = x.shape[-1].value
-    batch_size = x.shape[0].value
+    dim_features = x.shape[-1]
+    batch_size = x.shape[0]
     
     b = tf.get_variable('b', shape=(hidden_dim), initializer=tf.zeros_initializer())
     W = tf.get_variable('W',
         shape=(dim_features, hidden_dim),
         dtype=tf.float32,
         initializer=tf.contrib.layers.xavier_initializer())
-    z = tf.nn.xw_plus_b(x, W, b)
+    z = tf.nn.xw_plus_b(x, W, b, name='z')
     
     # x_cols = x.get_shape()[-1]
     #
