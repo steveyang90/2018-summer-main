@@ -30,7 +30,6 @@ def affine_layer(hidden_dim, x):
     Hint: always initialize "b" as 0s.  It isn't a constant though!
           It needs to be a trainable variable!
     '''
-    tf.set_random_seed(0)
     
     dim_features = x.shape[-1].value
     batch_size = x.shape[0].value
@@ -42,7 +41,7 @@ def affine_layer(hidden_dim, x):
         initializer=tf.contrib.layers.xavier_initializer())
     z = tf.nn.xw_plus_b(x, W, b, name='z')
     
-    return W
+    return z
     
 def fully_connected_layers(hidden_dims, x):
     '''Construct fully connected layer(s).
