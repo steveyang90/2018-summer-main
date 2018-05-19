@@ -3,16 +3,16 @@ import tensorflow as tf
 
 def affine_layer(hidden_dim, x):
     '''Create an affine transformation.
-
+    
     An affine transformation from linear algebra is "xW + b".
-
+    
     Note that we want to compute this affine function on each
     feature vector "x" in a batch of examples and return the corresponding
     transformed vectors, each of dimension "hidden_dim".
-
+    
     We'll see another way of implementing this using more sophisticated APIs
     in Assignment 2.
-
+    
     Args:
       x: an op representing the features/incoming layer.
          The tensor that this op provides is of shape [batch_size x #features].
@@ -30,20 +30,18 @@ def affine_layer(hidden_dim, x):
     Hint: always initialize "b" as 0s.  It isn't a constant though!
           It needs to be a trainable variable!
     '''
-    pass
-
-    # START YOUR CODE
-
-    # Draw the sketch suggested in the hint above.
-    # Include a photo of the sketch in your submission.
-    # In your sketch, label all matrix/vector dimensions.
-
-    # Create trainable variables "W" and "b"
-    # Hint: use tf.get_variable, tf.zeros_initializer, and tf.contrib.layers.xavier_initializer
-
-    # Return xW + b.
-    # END YOUR CODE
-
+    
+    dim_features = x_ph.shape[-1].value
+    batch_size = x_ph.shape[0].value
+    
+    b = tf.get_variable('b', shape=(hidden_dim,), initializer=tf.zeros_initializer)
+    W = tf.get_variable('W',
+        shape=(dim_features, hidden_dim),
+        initializer=tf.contrib.layers.xavier_initializer)
+    z = tf.nn.xw_plus_b(x, W, b, name='z')
+    
+    return z
+    
 def fully_connected_layers(hidden_dims, x):
     '''Construct fully connected layer(s).
 
@@ -60,7 +58,7 @@ def fully_connected_layers(hidden_dims, x):
 
     To get the tests to pass, you must use tf.nn.relu(.) as your element-wise nonlinearity.
     
-    Hint: see tf.variable_scope - you'll want to use this to make each layer 
+    Hint: see tf.variable_scope - you'll want to use this to make each layer
     unique.
 
     Hint: a fully connected layer is a nonlinearity of an affine of its input.
