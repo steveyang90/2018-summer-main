@@ -73,9 +73,12 @@ def fully_connected_layers(hidden_dims, x):
     '''
 
     # START YOUR CODE
-    with tf.variable_scope(None, default_name="layer"):
-        z = affine_layer(hidden_dims, x)
-        h = tf.nn.relu(z)
+    if not hidden_dims:
+        return x
+    
+    for layer in hidden_dims:
+        with tf.variable_scope(None, default_name="layer"):
+            h = tf.nn.relu(affine_layer(layer, x))
         return x if hidden_dims == 0 else h
     # END YOUR CODE
 
