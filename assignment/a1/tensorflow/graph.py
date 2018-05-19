@@ -42,8 +42,7 @@ def affine_layer(hidden_dim, x):
         initializer=tf.contrib.layers.xavier_initializer())
     z = tf.nn.xw_plus_b(x, W, b, name='z')
     
-    print(W)
-    return z
+    return W
     
 def fully_connected_layers(hidden_dims, x):
     '''Construct fully connected layer(s).
