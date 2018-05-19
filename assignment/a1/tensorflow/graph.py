@@ -34,7 +34,7 @@ def affine_layer(hidden_dim, x):
     dim_features = x.shape[-1].value
     batch_size = x.shape[0].value
     
-    b = tf.get_variable('b', shape=(hidden_dim,), initializer=tf.zeros_initializer)
+    b = tf.get_variable('b', shape=(hidden_dim,), initializer=tf.zeros_initializer())
     W = tf.get_variable('W',
         shape=(dim_features, hidden_dim),
         dtype=tf.float32,
