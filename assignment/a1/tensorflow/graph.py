@@ -136,7 +136,7 @@ def MakeLoss(logits, y_ph):
     Hint:  See tf.reduce_mean to go from a vector of per-item losses to the average batch-wide loss.
     '''
     # YOUR CODE HERE
-    return None
+    return tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=y_ph, logits=logits))
     # END YOUR CODE HERE
 
 
