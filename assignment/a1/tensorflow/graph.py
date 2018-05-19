@@ -38,7 +38,7 @@ def affine_layer(hidden_dim, x):
     W = tf.get_variable('W',
         shape=(dim_features, hidden_dim),
         dtype=tf.float32,
-        initializer=tf.contrib.layers.xavier_initializer)
+        initializer=tf.ones)
     z = tf.nn.xw_plus_b(x, W, b, name='z')
     
     return z
