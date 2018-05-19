@@ -39,7 +39,7 @@ def affine_layer(hidden_dim, x):
         shape=(dim_features, hidden_dim),
         dtype=tf.float32,
         initializer=tf.contrib.layers.xavier_initializer())
-    z = tf.add(tf.matmul(x,W), b)
+    return tf.nn.xw_plus_b(x, W, b, name='z')
     
     # x_cols = x.get_shape()[-1]
     #
@@ -48,8 +48,8 @@ def affine_layer(hidden_dim, x):
     #
     # # Return xW + b.
     # return tf.add(tf.matmul(x,W), b)
-    
-    return z
+    # 
+    # return z
     
 def fully_connected_layers(hidden_dims, x):
     '''Construct fully connected layer(s).
