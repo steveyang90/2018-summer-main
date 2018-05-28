@@ -16,9 +16,9 @@ from . import constants
 # Package and module utils
 def require_package(package_name):
     import pkgutil
-    import pip
+    import subprocess
     if not pkgutil.find_loader(package_name):
-        pip.main(["install", package_name])
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', package_name])
 
 def run_tests(test_module, test_names, reload=True):
     import unittest
