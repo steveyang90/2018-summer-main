@@ -99,12 +99,18 @@ def softmax_output_layer(h_, labels_, num_classes):
     """
     with tf.variable_scope("Logits"):
         #### YOUR CODE HERE ####
-        logits_ = None  # replace with (h W + b)
         # Please name your variables 'W_out' and 'b_out', as in:
-        #   W_out_ = tf.get_variable("W_out", ...)
-
-
-
+        W_out_ = tf.get_variable(
+            "W_out",
+            shape=(h_.shape[-1], num_classes),
+            initializer=tf.random_normal_initializer()
+        )
+        b_out_ = tf.get_variable(
+            "b_out",
+            shape=(h_.shape[-1]),
+            initializer=tf.zeros_initializer()
+        )
+        logits_ = tf.nn.xw_plus_b(h_, W_out_, b_out_)  # replace with (h W + b)
         #### END(YOUR CODE) ####
 
     # If no labels provided, don't try to compute loss.
@@ -113,9 +119,12 @@ def softmax_output_layer(h_, labels_, num_classes):
 
     with tf.name_scope("Softmax"):
         #### YOUR CODE HERE ####
-        loss_ = None  # replace with mean cross-entropy loss over batch
-
-
+        loss1 = tf.nn.sparse_softmax_cross_entropy_with_logits(
+                    labels=labels_,
+                    logits=logits_
+        )
+        loss_ = tf.reduce_mean(loss1)  # replace with mean cross-entropy loss over batch
+                
         #### END(YOUR CODE) ####
 
     return loss_, logits_
@@ -158,7 +167,11 @@ def BOW_encoder(ids_, ns_, V, embed_dim, hidden_dims, dropout_rate=0,
     #   xs_: [batch_size, max_len, embed_dim]
     with tf.variable_scope("Embedding_Layer"):
         #### YOUR CODE HERE ####
-        xs_ = None  # replace with a call to embedding_layer
+        xs_ = embedding_layer(
+            ids_=ids_,
+            V=V,
+            embed_dim=embed_dim
+        )  # replace with a call to embedding_layer
         #### END(YOUR CODE) ####
 
     #### YOUR CODE HERE ####
@@ -167,13 +180,18 @@ def BOW_encoder(ids_, ns_, V, embed_dim, hidden_dims, dropout_rate=0,
     mask_ = tf.expand_dims(tf.sequence_mask(ns_, xs_.shape[1],
                                             dtype=tf.float32), -1)
     # Multiply xs_ by the mask to zero-out pad indices.
-
+    masked_ = tf.multiply(xs_, mask_)
 
     # Sum embeddings: [batch_size, max_len, embed_dim] -> [batch_size, embed_dim]
-
+    summed_embed_ = tf.reduce_sum(masked_, axis=1)
 
     # Build a stack of fully-connected layers
-
+    h_ = fully_connected_layers(summed_embed_,
+        hidden_dims,
+        activation=tf.tanh,
+        dropout_rate=dropout_rate,
+        is_training=is_training
+    )
 
     #### END(YOUR CODE) ####
     return h_, xs_
