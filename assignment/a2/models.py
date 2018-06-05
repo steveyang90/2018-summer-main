@@ -25,9 +25,17 @@ def embedding_layer(ids_, V, embed_dim, init_scale=0.001):
     # Approximately 2-3 lines of code.
     # Please name your embedding matrix 'W_embed', as in:
     #   W_embed_ = tf.get_variable("W_embed", ...)
-
-
-
+    init = tf.random_uniform_initializer(
+        minval=init_scale*-1,
+        maxval=init_scale
+    )
+    W_embed_ = tf.get_variable(
+        "W_embed",
+        shape=(V, embed_dim),
+        initializer=init
+    )
+    xs_ = tf.nn.embedding_lookup(W_embed_, ids_)
+    
     #### END(YOUR CODE) ####
     return xs_
 
