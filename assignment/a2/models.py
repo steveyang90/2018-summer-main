@@ -107,7 +107,7 @@ def softmax_output_layer(h_, labels_, num_classes):
         )
         b_out_ = tf.get_variable(
             "b_out",
-            shape=(h_.shape[-1]),
+            shape=(num_classes),
             initializer=tf.zeros_initializer()
         )
         logits_ = tf.nn.xw_plus_b(h_, W_out_, b_out_)  # replace with (h W + b)
