@@ -64,7 +64,7 @@ def fully_connected_layers(h0_, hidden_dims, activation=tf.tanh,
         #### YOUR CODE HERE ####
         # Add dropout after each hidden layer (1-2 lines of code).
         if dropout_rate > 0:
-            h_ = tf.layers.dropout(h_, rate=dropout_rate)  # replace with dropout applied to h_
+            h_ = tf.layers.dropout(h_, rate=dropout_rate, training=is_training)  # replace with dropout applied to h_
 
 
         #### END(YOUR CODE) ####
