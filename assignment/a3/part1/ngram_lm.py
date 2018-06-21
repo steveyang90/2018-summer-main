@@ -153,7 +153,7 @@ class AddKTrigramLM(BaseLM):
 
         #### YOUR CODE HERE ####
         # Compute context counts
-        self.context_totals = {k: sum(v.values()) for (k,v) in counts.items()}
+        self.context_totals = {k: sum(v.values()) for (k,v) in self.counts.items()}
         
         #### END(YOUR CODE) ####
         # Freeze defaultdicts so we don't accidentally modify later.
