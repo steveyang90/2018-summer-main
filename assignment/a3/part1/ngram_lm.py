@@ -193,7 +193,7 @@ class AddKTrigramLM(BaseLM):
         #### YOUR CODE HERE ####
         # Hint: self.counts.get(...) and self.context_totals.get(...) may be
         # useful here. See note in dict_notes.md about how this works.
-        p_abc = self.counts.get(context, {}).get(word, k)
+        p_abc = self.counts.get(context, {}).get(word, 0) + k
         p_ab = self.context_totals.get(context, 0) + k*self.V
         
         return p_abc / p_ab
