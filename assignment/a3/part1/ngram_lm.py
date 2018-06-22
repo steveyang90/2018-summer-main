@@ -279,7 +279,16 @@ class KNTrigramLM(BaseLM):
         w_1, w_2 = None, None
         for word in tokens:
             #### YOUR CODE HERE ####
-            pass
+            # unigram
+            self.counts[()][word] += 1
+            # bigram
+            if w_1 is not None:
+                self.counts[(w_1,)][word] += 1
+                # we only care about single preceding word
+                self.type_contexts[word].add(w_1)
+            # trigram
+            if w_1 is not None and w_2 is not None:
+                self.counts[(w_2,w_1)][word] += 1
 
 
 
@@ -295,12 +304,13 @@ class KNTrigramLM(BaseLM):
 
         #### YOUR CODE HERE ####
         # Count the total for each context.
-
+        self.context_totals = {k: sum(v.values()) for (k,v) in self.counts.items()}
+        
         # Count the number of nonzero entries for each context.
-
+        self.context_nnz = {k: len(v) for (k,v) in self.counts.items()}
 
         # Compute type fertilities, and the sum z_tf.
-
+        self.type_fertility = {k: len(v) for (k,v) in self.type_contexts.items()}
 
         self.z_tf = float(sum(self.type_fertility.values()))
         #### END(YOUR CODE) ####
@@ -345,9 +355,17 @@ class KNTrigramLM(BaseLM):
         #### YOUR CODE HERE ####
         # Hint: self.counts.get(...) and self.context_totals.get(...) may be
         # useful here. See note in dict_notes.md about how this works.
-
-
-
+        try:
+            c_w = max(0, self.counts.get(context, {}).get(word, 0) - delta)
+            discount =  c_w / self.context_totals.get(context, 0)
+        except ZeroDivisionError:
+            discount = 0
+        try:
+            alpha = delta * self.context_nnz.get(context, 0) / self.context_totals.get(context, 0)
+        except ZeroDivisionError:
+            alpha = 1
+            
+        return discount + alpha * pw
         #### END(YOUR CODE) ####
 
 
