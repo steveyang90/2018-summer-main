@@ -37,7 +37,7 @@ def find_nn_cos(v, Wv, k=10):
     
     nns = np.argsort(similarity)[-10:][::-1]
     similarities = np.sort(similarity)[-10:][::-1]
-    return (nns, ds)
+    return (nns, similarities)
     #### END(YOUR CODE) ####
 
 
