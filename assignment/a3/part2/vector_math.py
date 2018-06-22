@@ -32,7 +32,7 @@ def find_nn_cos(v, Wv, k=10):
     pass
     #### YOUR CODE HERE ####
     dp = np.dot(Wv, v)
-    norm = np.linalg.norm(Wv, ord=2, axis=1) * np.linalg.norm(bb, ord=2)
+    norm = np.linalg.norm(Wv, ord=2, axis=1) * np.linalg.norm(v, ord=2)
     similarity = dp / norm
     
     nns = np.argsort(similarity)[-10:][::-1]
