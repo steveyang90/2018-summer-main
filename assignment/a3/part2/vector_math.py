@@ -35,8 +35,8 @@ def find_nn_cos(v, Wv, k=10):
     norm = np.linalg.norm(Wv, ord=2, axis=1) * np.linalg.norm(v, ord=2)
     similarity = dp / norm
     
-    nns = np.argsort(similarity)[-10:][::-1]
-    similarities = np.sort(similarity)[-10:][::-1]
+    nns = np.argsort(similarity)[-k:][::-1]
+    similarities = np.sort(similarity)[-k:][::-1]
     return (nns, similarities)
     #### END(YOUR CODE) ####
 
