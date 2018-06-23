@@ -62,6 +62,7 @@ def analogy(vA, vB, vC, Wv, k=5):
     """
     pass
     #### YOUR CODE HERE ####
-
+    x = vB + vC - vA
+    return find_nn_cos(x, Wv, k=k)
 
     #### END(YOUR CODE) ####
