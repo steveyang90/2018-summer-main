@@ -265,13 +265,24 @@ class RNNLM(object):
         # Note: self.softmax_ns (i.e. k=200) is already defined; use that as the
         # number of samples.
             # Loss computation (sampled, for training)
-
-
-
-        # Define optimizer and training op
-
-
-
+        with tf.variable_scope("Training"):
+            train_individual_loss_ = tf.nn.sampled_soft_max_loss(
+                weights = tf.transpose(self.W_out_),
+                biases = self.b_out_,
+                labels = self.target_y_.reshape([-1]),
+                inputs = self.o_.reshape([-1, self.H]),
+                num_sampled = self.softmax_ns
+            )
+            
+            self.train_loss_ = tf.reduce_mean(train_individual_loss_)
+            
+            # Define optimizer and training op
+            train_op_ = tf.train.AdamOptimizer(self.learning_rate_)
+            self.train_step_ = train_op_.minimize(
+                self.train_loss_,
+                global_step = tf.train.get_global_step()
+            )
+            
         #### END(YOUR CODE) ####
 
     @with_self_graph
