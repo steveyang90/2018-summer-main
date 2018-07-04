@@ -197,7 +197,7 @@ class RNNLM(object):
                 shape=(self.V, self.H),
                 initializer=uniform_init
             )
-            self.x_ = tf.nn.embedding_lookup(W_in_, self.input_w_)
+            self.x_ = tf.nn.embedding_lookup(self.W_in_, self.input_w_)
             
         # Construct RNN/LSTM cell and recurrent layer.
         with tf.variable_scope("Recurrent_Layer"):
