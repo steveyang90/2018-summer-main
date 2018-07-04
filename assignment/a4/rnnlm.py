@@ -228,7 +228,7 @@ class RNNLM(object):
                 shape=(self.V),
                 initializer=tf.zeros_initializer()
             )
-            self.logits_ = matmul3d(self.o_, self.W_out_) + b_out_
+            self.logits_ = matmul3d(self.o_, self.W_out_) + self.b_out_
             
         # Loss computation (true loss, for prediction)
             with tf.variable_scope("Softmax"):
@@ -236,7 +236,7 @@ class RNNLM(object):
                             labels=self.target_y_,
                             logits=self.logits_
                 )
-                loss_ = tf.reduce_mean(loss1)
+                self.loss_ = tf.reduce_mean(loss1)
                 
         #### END(YOUR CODE) ####
 
