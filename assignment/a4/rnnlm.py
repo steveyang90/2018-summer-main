@@ -232,11 +232,11 @@ class RNNLM(object):
             
         # Loss computation (true loss, for prediction)
             with tf.variable_scope("Softmax"):
-                loss1 = tf.nn.sparse_softmax_cross_entropy_with_logits(
+                individual_loss_ = tf.nn.sparse_softmax_cross_entropy_with_logits(
                             labels=self.target_y_,
                             logits=self.logits_
                 )
-                self.loss_ = tf.reduce_mean(loss1)
+                self.loss_ = tf.reduce_mean(individual_loss_)
                 
         #### END(YOUR CODE) ####
 
