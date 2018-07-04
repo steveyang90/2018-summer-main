@@ -204,7 +204,7 @@ class RNNLM(object):
             self.cell_ = MakeFancyRNNCell(self.H, self.dropout_keep_prob_,
                 num_layers=self.num_layers)
                 
-            self.initial_h_ = self.cell_.zero_state(self.batch_size_)
+            self.initial_h_ = self.cell_.zero_state(self.batch_size_, dtype=tf.float32)
             
             self.o_, self.final_h_ = tf.nn.dynamic_rnn(
                 self.cell_,
