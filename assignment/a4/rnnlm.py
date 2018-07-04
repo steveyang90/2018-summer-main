@@ -305,6 +305,7 @@ class RNNLM(object):
         )
         
         print(self.logits_.get_shape())
+        print(tf.reshape(self.logits_, [-1, self.V]).get_shape())
         print(samples_flat_.get_shape())
         # self.pred_samples_ = tf.reshape(samples_flat_, [self.batch_size_, self.max_time_, 1])
 
