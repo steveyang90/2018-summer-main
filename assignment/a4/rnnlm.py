@@ -195,7 +195,7 @@ class RNNLM(object):
             self.W_in_ = tf.get_variable(
                 "W_in",
                 shape=(self.V, self.H),
-                initalizer=uniform_init
+                initializer=uniform_init
             )
             self.x_ = tf.nn.embedding_lookup(W_in_, self.input_w_)
             
