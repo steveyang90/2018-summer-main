@@ -269,9 +269,10 @@ class RNNLM(object):
             train_individual_loss_ = tf.nn.sampled_softmax_loss(
                 weights = tf.transpose(self.W_out_),
                 biases = self.b_out_,
-                labels = tf.reshape(self.target_y_, [-1, 1]),
+                labels = tf.reshape(self.target_y_, [-1]),
                 inputs = tf.reshape(self.o_, [-1, self.H]),
-                num_sampled = self.softmax_ns
+                num_sampled = self.softmax_ns,
+                num_classes = self.V
             )
             
             self.train_loss_ = tf.reduce_mean(train_individual_loss_)
