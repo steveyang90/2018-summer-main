@@ -266,7 +266,7 @@ class RNNLM(object):
         # number of samples.
             # Loss computation (sampled, for training)
         with tf.variable_scope("Training"):
-            train_individual_loss_ = tf.nn.sampled_soft_max_loss(
+            train_individual_loss_ = tf.nn.sampled_softmax_loss(
                 weights = tf.transpose(self.W_out_),
                 biases = self.b_out_,
                 labels = self.target_y_.reshape([-1]),
