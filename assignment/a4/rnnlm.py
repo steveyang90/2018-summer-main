@@ -187,26 +187,57 @@ class RNNLM(object):
         # See hints in instructions!
 
         # Construct embedding layer
-
-
-
+        uniform_init = tf.random_uniform_initializer(
+            minval=-1.0,
+            maxval=1.0
+        )
+        with tf.variable_scope("Embedding_Layer"):
+            self.W_in_ = tf.get_variable(
+                "W_in",
+                shape=(self.V, self.H),
+                initalizer=uniform_init
+            )
+            self.x_ = tf.nn.embedding_lookup(W_in_, self.input_w_)
+            
         # Construct RNN/LSTM cell and recurrent layer.
-
-
-
-
-
+        with tf.variable_scope("Recurrent_Layer"):
+            self.cell_ = MakeFancyRNNCell(self.H, self.dropout_keep_prob_,
+                num_layers=self.num_layers)
+                
+            self.initial_h_ = self.cell_.zero_state(self.batch_size_)
+            
+            self.o_, self.final_h_ = tf.nn.dynamic_rnn(
+                self.cell_,
+                self.x_,
+                sequence_length=self.ns_,
+                initial_state=self.initial_h_
+            )
+            
         # Softmax output layer, over vocabulary. Just compute logits_ here.
         # Hint: the matmul3d function will be useful here; it's a drop-in
         # replacement for tf.matmul that will handle the "time" dimension
         # properly.
-
-
-
+        with tf.variable_scope("Output_Layer"):
+            self.W_out_ = tf.get_variable(
+                "W_out",
+                shape=(self.H, self.V),
+                initializer=uniform_init
+            )
+            self.b_out_ = tf.get_variable(
+                "b_out",
+                shape=(self.V),
+                initializer=tf.zeros_initializer()
+            )
+            self.logits_ = matmul3d(self.o_, self.W_out_) + b_out_
+            
         # Loss computation (true loss, for prediction)
-
-
-
+            with tf.variable_scope("Softmax"):
+                loss1 = tf.nn.sparse_softmax_cross_entropy_with_logits(
+                            labels=self.target_y_,
+                            logits=self.logits_
+                )
+                loss_ = tf.reduce_mean(loss1)
+                
         #### END(YOUR CODE) ####
 
     @with_self_graph
@@ -260,5 +291,3 @@ class RNNLM(object):
 
 
         #### END(YOUR CODE) ####
-
-
