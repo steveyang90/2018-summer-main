@@ -210,7 +210,8 @@ class RNNLM(object):
                 self.cell_,
                 self.x_,
                 sequence_length=self.ns_,
-                initial_state=self.initial_h_
+                initial_state=self.initial_h_,
+                dtype=tf.float32
             )
             
         # Softmax output layer, over vocabulary. Just compute logits_ here.
