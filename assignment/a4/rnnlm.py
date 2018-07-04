@@ -299,15 +299,13 @@ class RNNLM(object):
         self.pred_samples_ = None
 
         #### YOUR CODE HERE ####
-        samples_flat_ = tf.multinomial(
-            tf.reshape(self.logits_, [-1, self.V]),
-            num_samples = 1
-        )
-        
-        # print(self.logits_.get_shape())
-        # print(tf.reshape(self.logits_, [-1, self.V]).get_shape())
-        # print(samples_flat_.get_shape())
-        self.pred_samples_ = tf.reshape(samples_flat_, [self.batch_size_, self.max_time_, 1])
-
-
+        with tf.variable_scope("Word_Sampler"):
+            samples_flat_ = tf.multinomial(
+                tf.reshape(self.logits_, [-1, self.V]),
+                num_samples = 1
+            )
+            
+            self.pred_samples_ = tf.reshape(samples_flat_, [self.batch_size_, self.max_time_, 1])
+            
+            
         #### END(YOUR CODE) ####
