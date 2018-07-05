@@ -281,8 +281,9 @@ class RNNLM(object):
             # Define optimizer and training op
             train_op_ = tf.train.AdamOptimizer(self.learning_rate_)
             grads_and_vars = train_op_.compute_gradients(self.train_loss_)
-            clipped_grads_and_vars = [(tf.clip_by_global_norm(gv[0], self.max_grad_norm_), gv[1])\
-                for gv in grads_and_vars]
+            clipped_grads = [tf.glip_by_global_norm(gv[0], self.max_grad_norm_) for gv in grads_and_vars]
+            gvars = [gv[1] for gv in grads_and_vars]
+            clipped_grads_and_vars = tuple(zip(clipped_grads, gvars))
             self.train_step_ = train_op_.apply_gradients(clipped_grads_and_vars)
             #
             # self.train_step_ = train_op_.minimize(
