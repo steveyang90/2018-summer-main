@@ -157,10 +157,10 @@ class HMM(object):
                 
         # Hint:  if you fail the unit tests, print out your alpha here
         #        and check it manually against the tests.
-        #  print("cell: ", i, t, "   ")
-        #  print("emission: ", self.emission(t,w), "   ")
-        #  print("sum terms: ", sum_terms, "   ")
-        #  print("alpha: ", alpha[(i,t)])
+        print("cell: ", i, t, "   ")
+        print("emission: ", self.emission(t,w), "   ")
+        print("sum terms: ", sum_terms, "   ")
+        print("alpha: ", alpha[(i,t)])
 
         #### END(YOUR CODE) ####
         return alpha
