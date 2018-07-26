@@ -251,12 +251,16 @@ class HMM(object):
         bp = dict()
 
         #### YOUR CODE HERE ####
-
-
-
-
-
-
+        for i, w in enumerate(sentence):
+            for t in self.tagset:
+                if i == 0: # base case
+                    delta[(0, t)] = self.initial(t) + self.emission(t, w)
+                else:
+                    max_terms = [(self.transition(t_p, t) + delta[(i-1, t_p)])
+                                 for t_p in self.tagset]
+                    delta[(i, t)] = self.emission(t, w) + max(sum_terms)
+                    bp[(i, t)] = list(self.tagset)[np.argmax(max_terms)]
+                    
         #### END(YOUR CODE) ####
 
         return delta, bp
