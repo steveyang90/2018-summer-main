@@ -258,7 +258,7 @@ class HMM(object):
                 else:
                     max_terms = [(self.transition(t_p, t) + delta[(i-1, t_p)])
                                  for t_p in self.tagset]
-                    delta[(i, t)] = self.emission(t, w) + max(sum_terms)
+                    delta[(i, t)] = self.emission(t, w) + max(max_terms)
                     bp[(i, t)] = list(self.tagset)[np.argmax(max_terms)]
                     
         #### END(YOUR CODE) ####
