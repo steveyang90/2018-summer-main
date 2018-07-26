@@ -146,22 +146,25 @@ class HMM(object):
         """
         alpha = dict()
         #### YOUR CODE HERE ####
-        for t in self.tagset:
-            alpha[(0, t)] = self.initial(t) + self.emission(t, sentence[0])
+        # for t in self.tagset:
+        #     alpha[(0, t)] = self.initial(t) + self.emission(t, sentence[0])
         # Iterate through the sentence from left to right.
         for i, w in enumerate(sentence):
             for t in self.tagset:
-                sum_terms = [(self.transition(t_p, t) + alpha[(i, t_p)])
-                             for t_p in self.tagset]
-                alpha[(i+1, t)] = self.emission(t, w) + logsumexp(sum_terms)
-                
+                if i == 0: # base case
+                    alpha[(i, t)] = self.initial(t) + self.emission(t, w)
+                else:
+                    sum_terms = [(self.transition(t_p, t) + alpha[(i-1, t_p)])
+                                 for t_p in self.tagset]
+                    alpha[(i, t)] = self.emission(t, w) + logsumexp(sum_terms)
+                    
         # Hint:  if you fail the unit tests, print out your alpha here
         #        and check it manually against the tests.
-                print("cell: ", i, t, "   ")
-                print("emission: ", self.emission(t,w), "   ")
-                print("sum terms: ", sum_terms, "   ")
-                print("alpha: ", alpha[(i,t)])
-
+                    print("cell: ", i, t, "   ")
+                    print("emission: ", self.emission(t,w), "   ")
+                    print("sum terms: ", sum_terms, "   ")
+                    print("alpha: ", alpha[(i,t)])
+                
         #### END(YOUR CODE) ####
         return alpha
 
