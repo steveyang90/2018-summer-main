@@ -151,9 +151,9 @@ class HMM(object):
         # Iterate through the sentence from left to right.
         for i, w in enumerate(sentence):
             for t in self.tagset:
-                sum_terms = [sum(self.transition(t_p, t), alpha[(i - 1, t_p)])
+                sum_terms = [sum(self.transition(t_p, t), alpha[(i, t_p)])
                                  for t_p in self.tagset]
-                alpha[(i, t)] = self.emission(t, w) + logsumexp(sum_terms)
+                alpha[(i+1, t)] = self.emission(t, w) + logsumexp(sum_terms)
                 
         # Hint:  if you fail the unit tests, print out your alpha here
         #        and check it manually against the tests.
