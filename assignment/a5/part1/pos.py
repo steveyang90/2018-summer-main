@@ -151,7 +151,7 @@ class HMM(object):
         # Iterate through the sentence from left to right.
         for i, w in enumerate(sentence):
             for t in self.tagset:
-                sum_terms = [(self.transition(t_p, t) + alpha[(i, t_p)])
+                sum_terms = [(self.transition(t, t_p) + alpha[(i, t_p)])
                              for t_p in self.tagset]
                 alpha[(i+1, t)] = self.emission(t, w) + logsumexp(sum_terms)
                 
