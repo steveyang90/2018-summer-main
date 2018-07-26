@@ -46,7 +46,7 @@ class PCFG(object):
         #### YOUR CODE HERE ####
         for p in parsed_sentence.productions():
             self.lhs_counts[p.lhs()] += 1
-            self.production_counts[(p.lhs(), p.rhs())] += 1
+            self.production_counts[p] += 1
         #### END(YOUR CODE) ####
 
     def compute_scores(self):
