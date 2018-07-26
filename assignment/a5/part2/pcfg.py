@@ -62,7 +62,7 @@ class PCFG(object):
 
         #### YOUR CODE HERE ####
         for k, v in self.production_counts.items():
-            self.scored_productions[k] = np.log(v) - np.log(self.lhs_counts[k])
+            self.scored_productions[k] = np.log(v) - np.log(self.lhs_counts[k.lhs()])
         #### END(YOUR CODE) ####
 
     def build_index(self):
