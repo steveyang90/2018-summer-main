@@ -44,9 +44,9 @@ class PCFG(object):
         """
         pass
         #### YOUR CODE HERE ####
-
-
-
+        for p in parsed_sentence.productions():
+            self.lhs_counts[p.lhs()] += 1
+            self.production_counts[(p.lhs(), p.rhs())] += 1
         #### END(YOUR CODE) ####
 
     def compute_scores(self):
@@ -61,9 +61,8 @@ class PCFG(object):
         self.scored_productions = dict()
 
         #### YOUR CODE HERE ####
-
-
-
+        for k, v in self.production_counts.items():
+            self.scored_productions[k] = np.log(v) - np.log(self.lhs_counts[k])
         #### END(YOUR CODE) ####
 
     def build_index(self):
@@ -142,4 +141,3 @@ class PCFG(object):
                 return json.JSONEncoder.default(self, obj)
 
         return json.dumps(d, indent=2, cls=NonterminalEncoder)
-
