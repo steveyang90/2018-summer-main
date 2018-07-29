@@ -57,7 +57,7 @@ class CKYParser(object):
         assert(grammar.parsing_index is not None)
         self._grammar = grammar
 
-        assert(beam_size is None or 
+        assert(beam_size is None or
                (isinstance(beam_size, int) and beam_size >= 1))
         assert(beam_width is None or beam_width > 0)
         self._beam_size = beam_size
@@ -102,11 +102,11 @@ class CKYParser(object):
         # For the ith token, you should populate cell (i,i+1).
         for i, word in enumerate(words):
             cell_key = (i,i+1)
-            pass
-
-
-
-
+            lhs = self._grammar.lookup_rhs(word)
+            for pos_tag in lhs:
+                pt = ProbabilisticTree(pos_tag[0], [word], logprob=pos_tag[1])
+                chart[cell_key][pos_tag[0]] = pt
+                
         #### END(YOUR CODE) ####
         return True
 
@@ -136,13 +136,16 @@ class CKYParser(object):
         for (i, j) in ordered_spans(N):
             for split in range(i+1, j):
                 # Consider all possible A -> B C
-                pass
-
-
-
-
-
-
+                for B in chart.get((i, split), {}).keys():
+                    for C in chart.get((split, j), {}).keys():
+                        for A, weight in self._grammar.lookup_rhs(B, C):
+                            B_t = chart[(i, split)][B]
+                            C_t = chart[(split, i)][C]
+                            x = B_t.logprob() + C_t.logprob() + weight
+                            if x > chart.get((i, j), {}).get(A).logprob():
+                                chart[(i, j)][A] = ProbabilisticTree(A,
+                                    [B_t, C_t],
+                                    logprob = x)
         #### END(YOUR CODE) ####
 
 
@@ -208,4 +211,3 @@ class CKYParser(object):
         if ret is None:
             logger.warn("Empty parse - target type '%s' not found in top cell [0,%d)." % (target_type, N))
         return (ret, chart) if return_chart else ret
-
