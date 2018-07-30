@@ -144,9 +144,10 @@ class CKYParser(object):
                             x = B_t.logprob() + C_t.logprob() + weight
                             if x > chart[(i, j)][A].logprob():
                                 chart[(i, j)][A] = ProbabilisticTree(A,
-                                    [B_t, C_t],
-                                    logprob = x)
-        print(chart)
+                                    [B_t, C_t], logprob = x)
+                                    
+        for k in chart.keys():
+            print(k)
         #### END(YOUR CODE) ####
 
 
