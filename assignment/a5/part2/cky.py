@@ -106,7 +106,7 @@ class CKYParser(object):
             for pos_tag in lhs:
                 pt = ProbabilisticTree(pos_tag[0], [word], logprob=pos_tag[1])
                 chart[cell_key][pos_tag[0]] = pt
-                
+        if not lhs: return False
         #### END(YOUR CODE) ####
         return True
 
@@ -145,9 +145,6 @@ class CKYParser(object):
                             if x > chart[(i, j)][A].logprob():
                                 chart[(i, j)][A] = ProbabilisticTree(A,
                                     [B_t, C_t], logprob = x)
-                                    
-        for k in chart.keys():
-            print(k)
         #### END(YOUR CODE) ####
 
 
