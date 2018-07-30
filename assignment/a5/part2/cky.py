@@ -146,7 +146,9 @@ class CKYParser(object):
                                 chart[(i, j)][A] = ProbabilisticTree(A,
                                     [B_t, C_t], logprob = x)
         #### END(YOUR CODE) ####
-
+        for k,v in chart.items():
+            print(k)
+            print(v)
 
     def parse(self, words, target_type=None, return_chart=False):
         """Run the CKY chart-parsing algorithm.
