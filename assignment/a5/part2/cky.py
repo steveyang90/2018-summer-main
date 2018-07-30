@@ -146,6 +146,7 @@ class CKYParser(object):
                                 chart[(i, j)][A] = ProbabilisticTree(A,
                                     [B_t, C_t],
                                     logprob = x)
+        print(chart)
         #### END(YOUR CODE) ####
 
 
