@@ -136,8 +136,8 @@ class CKYParser(object):
         for (i, j) in ordered_spans(N):
             for split in range(i+1, j):
                 # Consider all possible A -> B C
-                for B in chart.get((i, split), {}).keys():
-                    for C in chart.get((split, j), {}).keys():
+                for B in chart[(i, split)].keys():
+                    for C in chart[(split, j)].keys():
                         for A, weight in self._grammar.lookup_rhs(B, C):
                             B_t = chart[(i, split)][B]
                             C_t = chart[(split, i)][C]
