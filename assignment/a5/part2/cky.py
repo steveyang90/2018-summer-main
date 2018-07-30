@@ -140,15 +140,15 @@ class CKYParser(object):
                     for C in chart[(split, j)].keys():
                         for A, weight in self._grammar.lookup_rhs(B, C):
                             B_t = chart[(i, split)][B]
-                            C_t = chart[(split, i)][C]
+                            C_t = chart[(split, j)][C]
                             x = B_t.logprob() + C_t.logprob() + weight
                             if x > chart[(i, j)][A].logprob():
                                 chart[(i, j)][A] = ProbabilisticTree(A,
                                     [B_t, C_t], logprob = x)
         #### END(YOUR CODE) ####
-        for k,v in chart.items():
-            print(k)
-            print(v)
+        # for k,v in chart.items():
+        #     print(k)
+        #     print(v)
 
     def parse(self, words, target_type=None, return_chart=False):
         """Run the CKY chart-parsing algorithm.
